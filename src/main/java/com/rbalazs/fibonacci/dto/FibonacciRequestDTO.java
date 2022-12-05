@@ -1,0 +1,13 @@
+package com.rbalazs.fibonacci.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class FibonacciRequestDTO {
+    private String name;
+    private int number;
+}
