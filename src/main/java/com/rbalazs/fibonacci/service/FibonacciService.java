@@ -86,10 +86,8 @@ public class FibonacciService {
     }
 
     private int findUserByName(String name){
-        System.out.println("Trying to talk to other service on " + userServiceURL + "{name}");
-        Integer result = restTemplate.getForObject(userServiceURL + "{name}", Integer.class, name);
-        System.out.println("Got answer!!!!!!!!!!");
-        if(result != null) return result.intValue();
+        Integer result = restTemplate.getForObject(userServiceURL + "user/" + "{name}", Integer.class, name);
+        if(result != null) return result;
         return 0;
     }
 
