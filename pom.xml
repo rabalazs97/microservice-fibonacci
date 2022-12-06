@@ -111,13 +111,7 @@
                       <include>**/*Test.java</include>
                     </includes>
                   </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.junit.jupiter</groupId>
-                        <artifactId>junit-jupiter-engine</artifactId>
-                        <version>5.4.0</version>
-                    </dependency>
-                </dependencies>
+
             </plugin>
 		</plugins>
     </build>
