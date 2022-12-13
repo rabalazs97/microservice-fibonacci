@@ -4,7 +4,7 @@ services:
     container_name: user-service 
     image: rabalazs97/user:latest
     ports:
-      - "8080:8080"
+      - "7777:7777"
     networks:
       - spring-cloud-network_test
     depends_on:
