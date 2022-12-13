@@ -23,7 +23,7 @@ pipeline {
         stage("E2E Test"){
             steps{
                 sh "docker-compose -version"
-                sh "docker-compose -f src/test/resources/compose-test.yml up -d"
+                sh "docker-compose up -d"
                 waitUntil{
                     sh 'timeout 120 wget --retry-connrefused --tries=120 --waitretry=1 -q http://localhost:8080/ -O /dev/null' 
                 }
