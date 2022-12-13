@@ -24,12 +24,12 @@ pipeline {
             steps{
                 sh "docker-compose -version"
                 sh "docker-compose -f compose-test.yml up -d"
-                waitUntil{
-                    try{
-                        sh "curl -s --head --request GET 172.17.0.1:7777/actuator/health | grep '200'"
-                        return true
-                    } catch (Exception e){
-                        return false
+                script{
+                    timeout(time: 120, unit: 'SECONDS'){
+                        waitUntil{
+                            def r = sh(returnStdout: true, script: 'curl http://172.17.0.1:7777/ | grep "Hello buddy!"')
+                            r == 'Hello buddy!'
+                        }
                     }
                 }
                 sh "mvn failsafe:integration-test"
