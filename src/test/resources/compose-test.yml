@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+  user:
+    container_name: user-service 
+    image: rabalazs97/user:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-cloud-network_test
+    depends_on:
+      - configserver
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/microservicedb
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=sa
+  configserver:
+    container_name: configserver
+    image: rabalazs97/configserver:latest
+    ports:
+      - "8888:8888"
+    networks:
+      - spring-cloud-network_test
+  db:
+    container_name: db
+    image: postgres
+    environment:
+      POSTGRES_DB: microservicedb
+      POSTGRES_USER: sa
+      POSTGRES_PASSWORD: sa
+    ports:
+      - "5438:5432"
+    volumes:
+      - /var/lib/postgresql/data
+    networks:
+      - spring-cloud-network_test
+networks:
+  spring-cloud-network_test:
+    driver: bridge
