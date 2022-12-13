@@ -25,7 +25,7 @@ pipeline {
                 sh "docker-compose -version"
                 sh "docker-compose -f compose-test.yml up -d"
                 waitUntil{
-                    sh 'timeout 120 wget --retry-connrefused --tries=120 --waitretry=1 -q http://localhost:8080/ -O /dev/null' 
+                    sh 'timeout 120 wget --retry-connrefused --tries=120 --waitretry=1 -q http://localhost:7777/ -O /dev/null' 
                 }
                 sh "mvn failsafe:integration-test"
             }
