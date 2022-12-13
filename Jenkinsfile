@@ -33,6 +33,7 @@ pipeline {
                     }
                 }
                 sh "mvn failsafe:integration-test"
+                sh "docker-compose -f compose-test.yml down"
             }
         }
     }
