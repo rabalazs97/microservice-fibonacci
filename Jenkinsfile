@@ -24,7 +24,14 @@ pipeline {
             steps{
                 sh "docker-compose -version"
                 sh "docker-compose -f compose-test.yml up -d"
-                sh "docker-compose -f compose-test.yml wait"
+                waitUntil{
+                    try{
+                        sh "curl -s --head --request GET 172.17.0.1:7777/actuator/health | grep '200'"
+                        return true
+                    } catch (Exception e){
+                        return false
+                    }
+                }
                 sh "mvn failsafe:integration-test"
             }
         }
