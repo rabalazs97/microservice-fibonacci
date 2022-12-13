@@ -10,10 +10,24 @@ pipeline {
     }
 
     stages {
-        stage("Build") {
+        stage("Package") {
             steps {
                 sh "mvn -version"
-                sh "mvn clean install"
+                sh "mvn clean package -DskipTests"
+            }
+        }
+        stage("Unit Tests"){
+            steps {
+                sh "mvn test"
+            }
+        }
+        stage("E2E Test"){
+            steps{
+                sh "docker-compose -f ./src/test/resources/compose-test.yml up -d"
+                waitUntil{
+                    sh 'timeout 120 wget --retry-connrefused --tries=120 --waitretry=1 -q http://localhost:8080/ -O /dev/null' 
+                }
+                sh "mvn failsafe:integration-test"
             }
         }
     }
