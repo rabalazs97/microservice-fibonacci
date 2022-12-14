@@ -1,7 +1,6 @@
 version: '3.7'
 services:
   user:
-    container_name: user-service 
     image: rabalazs97/user:latest
     ports:
       - "7777:7777"
@@ -13,12 +12,10 @@ services:
       - SPRING_DATASOURCE_USERNAME=sa
       - SPRING_DATASOURCE_PASSWORD=sa
   configserver:
-    container_name: configserver
     image: rabalazs97/configserver:latest
     ports:
       - "8888:8888"
   db:
-    container_name: db
     image: postgres
     environment:
       POSTGRES_DB: microservicedb
