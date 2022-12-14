@@ -5,8 +5,6 @@ services:
     image: rabalazs97/user:latest
     ports:
       - "7777:7777"
-    networks:
-      - spring-cloud-network_test
     depends_on:
       - configserver
       - db
@@ -19,8 +17,6 @@ services:
     image: rabalazs97/configserver:latest
     ports:
       - "8888:8888"
-    networks:
-      - spring-cloud-network_test
   db:
     container_name: db
     image: postgres
@@ -32,8 +28,3 @@ services:
       - "5438:5432"
     volumes:
       - /var/lib/postgresql/data
-    networks:
-      - spring-cloud-network_test
-networks:
-  spring-cloud-network_test:
-    driver: bridge
