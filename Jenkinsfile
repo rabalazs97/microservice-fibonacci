@@ -25,14 +25,15 @@ pipeline {
             steps{
                 sh "docker-compose -version"
                 sh "docker-compose -f compose-test.yml up -d"
-                script{
-                    timeout(time: 120, unit: 'SECONDS'){
-                        waitUntil{
-                            def r = sh(returnStdout: true, script: 'curl http://127.0.0.1:7777/')
-                            r == 'Hello buddy!'
-                        }
-                    }
-                }
+                // script{
+                //     timeout(time: 120, unit: 'SECONDS'){
+                //         waitUntil{
+                //             def r = sh(returnStdout: true, script: 'curl http://127.0.0.1:7777/')
+                //             r == 'Hello buddy!' 
+                //         }
+                //     }
+                // }
+                sleep(time:20,unit:"SECONDS")
                 sh "mvn failsafe:integration-test"
                 sh "docker-compose -f compose-test.yml down"
             }
