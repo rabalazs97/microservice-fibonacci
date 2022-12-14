@@ -11,6 +11,7 @@ pipeline {
     stages {
         stage("Package") {
             steps {
+                sh "docker-compose -f compose-test.yml down"
                 sh "mvn -version"
                 sh "mvn clean package -DskipTests"
             }
