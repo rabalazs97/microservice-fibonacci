@@ -4,7 +4,7 @@ pipeline {
     }
     agent {
         dockerfile {
-            args '-u root -v /home/ci-cd/maven-repo:/var/maven/.m2 -v /var/run/docker.sock:/var/run/docker.sock -e MAVEN_CONFIG=/var/maven/.m2'
+            args '-u root --net=host -v /home/ci-cd/maven-repo:/var/maven/.m2 -v /var/run/docker.sock:/var/run/docker.sock -e MAVEN_CONFIG=/var/maven/.m2'
         }
     }
 
@@ -27,7 +27,7 @@ pipeline {
                 script{
                     timeout(time: 120, unit: 'SECONDS'){
                         waitUntil{
-                            def r = sh(returnStdout: true, script: 'curl http://user:7777/')
+                            def r = sh(returnStdout: true, script: 'curl http://127.0.0.1:7777/')
                             r == 'Hello buddy!'
                         }
                     }
