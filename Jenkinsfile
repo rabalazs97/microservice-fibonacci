@@ -28,7 +28,7 @@ pipeline {
                 script{
                     timeout(time: 120, unit: 'SECONDS'){
                         waitUntil{
-                            def r = sh(returnStdout: true, script: 'curl http://127.0.0.1:7777/')
+                            def r = sh(returnStdout: true, script: 'wget http://127.0.0.1:7777/')
                             r == 'Hello buddy!'
                         }
                     }

@@ -11,10 +11,14 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/microservicedb
       - SPRING_DATASOURCE_USERNAME=sa
       - SPRING_DATASOURCE_PASSWORD=sa
+    networks:
+      - spring-cloud-network-test
   configserver:
     image: rabalazs97/configserver:latest
     ports:
       - "8888:8888"
+    networks:
+      - spring-cloud-network-test
   db:
     image: postgres
     environment:
@@ -23,5 +27,10 @@ services:
       POSTGRES_PASSWORD: sa
     ports:
       - "5438:5432"
+    networks:
+      - spring-cloud-network-test
     volumes:
       - /var/lib/postgresql/data
+networks:
+  spring-cloud-network-test:
+    driver: bridge
