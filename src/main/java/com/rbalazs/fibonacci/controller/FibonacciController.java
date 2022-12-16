@@ -8,6 +8,7 @@ import com.rbalazs.fibonacci.dto.FibonacciRequestDTO;
 import com.rbalazs.fibonacci.service.FibonacciService;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FibonacciController {
     private final FibonacciService fibonacciService;
 
