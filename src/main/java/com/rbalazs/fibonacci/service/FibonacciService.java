@@ -86,6 +86,7 @@ public class FibonacciService {
     }
 
     private int findUserByName(String name){
+        if(name == "") return 0;
         Integer result = restTemplate.getForObject(userServiceURL + "user/" + "{name}", Integer.class, name);
         if(result != null) return result;
         return 0;
