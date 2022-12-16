@@ -52,7 +52,6 @@ class FibonacciControllerTest {
     void getConfigProperty() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/"))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("Config server down"));
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
