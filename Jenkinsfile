@@ -7,9 +7,8 @@ pipeline {
             args '-u root --net=host -v /home/ci-cd/maven-repo:/var/maven/.m2 -v /var/run/docker.sock:/var/run/docker.sock -e MAVEN_CONFIG=/var/maven/.m2'
         }
     }
-
     stages {
-        stage("Package") {
+        stage("Build") {
             steps {
                 sh "docker-compose -f compose-test.yml down"
                 sh "mvn -version"
@@ -25,22 +24,21 @@ pipeline {
             steps{
                 sh "docker-compose -version"
                 sh "docker-compose -f compose-test.yml up -d"
-                // script{
-                //     timeout(time: 120, unit: 'SECONDS'){
-                //         waitUntil{
-                //             def r = sh(returnStdout: true, script: 'curl http://127.0.0.1:7777/')
-                //             r == 'Hello buddy!' 
-                //         }
-                //     }
-                // }
                 sleep(time:20,unit:"SECONDS")
                 sh "mvn failsafe:integration-test"
                 sh "docker-compose -f compose-test.yml down"
             }
         }
+        stage("Build image and push to repo"){
+            steps {
+                sh "mvn spring-boot:build-image -DskipTests"
+            }
+        }
     }
-
     post {
+        success {
+            build job: 'deploy-fibonacci'
+        }
         always {
             cleanWs()
         }
